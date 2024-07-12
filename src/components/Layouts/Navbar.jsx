@@ -8,9 +8,10 @@ import TopBar from "../Fragments/TopBar";
 import Category from "../Fragments/Category";
 import "animate.css";
 
-function Navbar() {
+function Navbar({ onSearchChange }) {
   const [openSearch, setOpenSearch] = useState(false);
   const [openCategory, setOpenCategory] = useState(false);
+
   return (
     <>
       <div className="navbar bg-sky-600 text-white fixed z-50 top-0 lg:top-8 ">
@@ -66,12 +67,8 @@ function Navbar() {
             >
               Category
             </button>
-            <div className="form-control">
-              <input
-                type="text"
-                placeholder="Search"
-                className="input input-bordered w-[600px]"
-              />
+            <div className="form-control w-[600px] text-slate-600">
+              <Search onSearchChange={onSearchChange} />
             </div>
           </div>
           <div className="navbar-end ">
@@ -171,10 +168,10 @@ function Navbar() {
 
       {openSearch && (
         <div
-          className="container mx-auto fixed z-40 px-10 pt-20 pb-3 bg-sky-600  animate__faster animate__animated
+          className="container flex justify-center mx-auto fixed z-40 px-10 pt-20 pb-3 bg-sky-600  animate__faster animate__animated
 animate__slideInDown"
         >
-          <Search />
+          <Search onSearchChange={onSearchChange} />
         </div>
       )}
     </>

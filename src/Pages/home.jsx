@@ -10,21 +10,32 @@ import Skeleton from "../components/Fragments/Skeleton";
 function HomePage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState([products]);
 
   useEffect(() => {
     getProducts((res) => {
       if (res.success === true) {
         setProducts(res.data);
+        setSearch(res.data);
         setLoading(false);
       } else {
         console.log("error");
       }
     });
   }, []);
+
+  const onSearchChange = (value) => {
+    if (typeof value === "string") {
+      const filterProducts = products.filter((item) => {
+        return item.title.toLowerCase().includes(value.toLowerCase());
+      });
+      setSearch(filterProducts);
+    }
+  };
   return (
     <>
       <TopBar />
-      <Navbar />
+      <Navbar onSearchChange={onSearchChange} />
 
       <Carausel />
       <div className="container mx-auto justify-items-center mt-20 px-2 lg:px-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 lg:mt-28 mb-[2000px]">
@@ -32,7 +43,7 @@ function HomePage() {
           ? Array.from({ length: 4 }).map((_, index) => (
               <Skeleton key={index} /> // Menampilkan skeleton loading 4
             ))
-          : products.map((product) => {
+          : search.map((product) => {
               const imageUrl =
                 product.productImages && product.productImages.length > 0
                   ? product.productImages[0].image
