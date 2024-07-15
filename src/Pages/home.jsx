@@ -36,21 +36,19 @@ function HomePage() {
     <>
       <TopBar />
       <Navbar onSearchChange={onSearchChange} />
-
-      <Carausel />
-      <div className="container mx-auto justify-items-center mt-20 px-2 lg:px-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 lg:mt-28 mb-[2000px]">
+      <div className="container mx-auto justify-items-center px-2 lg:px-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 mt-8 lg:mt-16 mb-[2000px]">
         {loading
           ? Array.from({ length: 4 }).map((_, index) => (
               <Skeleton key={index} /> // Menampilkan skeleton loading 4
             ))
-          : search.map((product) => {
+          : search.map((product, index) => {
               const imageUrl =
                 product.productImages && product.productImages.length > 0
                   ? product.productImages[0].image
                   : "";
               return (
                 <CardProduct
-                  key={product.id}
+                  key={index}
                   title={product.title}
                   image={imageUrl}
                   price={product.price}

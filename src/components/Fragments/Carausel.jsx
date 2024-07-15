@@ -1,26 +1,26 @@
 function Carausel() {
   return (
-    <div className="container mx-auto">
+    <div className="container relative mx-auto">
       <div className="carousel w-full">
-        <div id="item1" className="carousel-item w-full pt-20 lg:pt-28">
+        <div id="item1" className="carousel-item w-full  mt-5">
           <img
             src="https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.jpg"
             className="w-full"
           />
         </div>
-        <div id="item2" className="carousel-item w-full pt-20 lg:pt-28">
+        <div id="item2" className="carousel-item w-full  mt-5">
           <img
             src="https://img.daisyui.com/images/stock/photo-1609621838510-5ad474b7d25d.jpg"
             className="w-full"
           />
         </div>
-        <div id="item3" className="carousel-item w-full pt-20 lg:pt-28">
+        <div id="item3" className="carousel-item w-full  mt-5">
           <img
             src="https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.jpg"
             className="w-full"
           />
         </div>
-        <div id="item4" className="carousel-item w-full pt-20 lg:pt-28">
+        <div id="item4" className="carousel-item w-full  mt-5">
           <img
             src="https://img.daisyui.com/images/stock/photo-1665553365602-b2fb8e5d1707.jpg"
             className="w-full"

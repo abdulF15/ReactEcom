@@ -14,7 +14,7 @@ function Navbar({ onSearchChange }) {
 
   return (
     <>
-      <div className="navbar bg-sky-600 text-white fixed z-50 top-0 lg:top-8 ">
+      <div className="navbar bg-sky-600 text-white sticky  top-0 z-50 ">
         <div className="w-full max-w-[1536px]  mx-auto">
           <div className="navbar-start flex lg:block">
             <div className="drawer">
@@ -58,7 +58,7 @@ function Navbar({ onSearchChange }) {
                 </ul>
               </div>
             </div>
-            <p className="btn btn-ghost text-xl">Ecommerce</p>
+            <p className="btn btn-ghost pl-3 text-xl">Ecommerce</p>
           </div>
           <div className="navbar-center hidden lg:flex gap-2">
             <button
