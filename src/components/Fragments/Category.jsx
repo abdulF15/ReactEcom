@@ -14,7 +14,10 @@ function Category() {
     });
   }, []);
   return (
-    <ul className="menu menu-horizontal bg-base-200 rounded-box ">
+    <ul
+      tabIndex={0}
+      className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow text-slate-700"
+    >
       <li>
         <Link to="/">All</Link>
       </li>

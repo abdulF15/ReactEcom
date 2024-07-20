@@ -61,12 +61,13 @@ function Navbar({ onSearchChange }) {
             <p className="btn btn-ghost pl-3 text-xl">Ecommerce</p>
           </div>
           <div className="navbar-center hidden lg:flex gap-2">
-            <button
-              className="btn btn-neutral btn-sm mt-2"
-              onClick={() => setOpenCategory(!openCategory)}
-            >
-              Category
-            </button>
+            <div className="dropdown dropdown-hover">
+              <div tabIndex={0} role="button" className="btn m-1">
+                Category &#x25BF;
+              </div>
+
+              <Category />
+            </div>
             <div className="form-control w-[600px] text-slate-600">
               <Search onSearchChange={onSearchChange} />
             </div>
@@ -156,15 +157,6 @@ function Navbar({ onSearchChange }) {
           </div>
         </div>
       </div>
-      {openCategory && (
-        <div
-          className={`w-full flex justify-center fixed top-20 z-40 px-10 py-5 pb-3 bg-sky-600  animate__faster animate__animated  ${
-            openCategory ? "animate__slideInDown" : "animate__slideInUp"
-          } `}
-        >
-          <Category />
-        </div>
-      )}
 
       {openSearch && (
         <div
