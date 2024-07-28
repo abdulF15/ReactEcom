@@ -1,36 +1,50 @@
-import { createContext, useState, useEffect } from "react";
+import React, { createContext, useReducer, useContext, useEffect } from "react";
 
-export const CartContext = createContext();
+const CartContext = createContext();
 
-const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState(() => {
-    const savedCart = localStorage.getItem("cart");
-    return savedCart ? JSON.parse(savedCart) : [];
-  });
+const cartReducer = (state, action) => {
+  switch (action.type) {
+    case "ADD_TO_CART":
+      const existingProductIndex = state.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      if (existingProductIndex >= 0) {
+        const updatedCart = state.map((item, index) =>
+          index === existingProductIndex
+            ? { ...item, qty: item.qty + action.payload.qty }
+            : item
+        );
+        return updatedCart;
+      } else {
+        return [...state, action.payload];
+      }
+    case "INITIALIZE_CART":
+      return action.payload || [];
+    default:
+      return state;
+  }
+};
+
+export const CartProvider = ({ children }) => {
+  const initialCart = JSON.parse(localStorage.getItem("cart")) || [];
+  const [cart, dispatch] = useReducer(cartReducer, initialCart);
+
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem("cart"));
+    if (storedCart) {
+      dispatch({ type: "INITIALIZE_CART", payload: storedCart });
+    }
+  }, []);
+
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  const addToCart = (product) => {
-    const existingProduct = cart.find((item) => item.id === product.id);
-
-    if (existingProduct) {
-      setCart(
-        cart.map((item) =>
-          item.id === product.id
-            ? { ...existingProduct, quantity: existingProduct.quantity + 1 }
-            : item
-        )
-      );
-    } else {
-      setCart([...cart, { ...product, quantity: 1 }]);
-    }
-  };
   return (
-    <CartContext.Provider value={{ cart, addToCart }}>
+    <CartContext.Provider value={{ cart, dispatch }}>
       {children}
     </CartContext.Provider>
   );
 };
 
-export default CartProvider;
+export const useCart = () => useContext(CartContext);

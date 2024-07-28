@@ -3,14 +3,39 @@ import ReactDOM from "react-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import Search from "../Elements/Input/Search";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TopBar from "../Fragments/TopBar";
 import Category from "../Fragments/Category";
 import "animate.css";
+import { useCart } from "../../context/CartContext";
+import { getProducts } from "../../services/product.service";
 
 function Navbar({ onSearchChange }) {
   const [openSearch, setOpenSearch] = useState(false);
-  const [openCategory, setOpenCategory] = useState(false);
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    getProducts((res) => {
+      if (res.success === true) {
+        setProducts(res.data);
+      } else {
+        console.log("error");
+      }
+    });
+  }, []);
+  const { cart } = useCart();
+  let totalPriceCart = 0;
+  let totalItems = 0;
+
+  if (products) {
+    products.forEach((product) => {
+      cart.forEach((item) => {
+        if (item.id === product.id) {
+          totalPriceCart += item.qty * product.price;
+          totalItems += 1;
+        }
+      });
+    });
+  }
 
   return (
     <>
@@ -107,7 +132,13 @@ function Navbar({ onSearchChange }) {
                       d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                     />
                   </svg>
-                  <span className="badge badge-sm indicator-item">8</span>
+                  {totalItems ? (
+                    <span className="badge badge-sm indicator-item">
+                      {totalItems}
+                    </span>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
               <div
@@ -115,12 +146,14 @@ function Navbar({ onSearchChange }) {
                 className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 w-52 shadow"
               >
                 <div className="card-body text-slate-700">
-                  <span className="text-lg font-bold">8 Items</span>
-                  <span className="text-info">Subtotal: $999</span>
+                  <span className="text-lg font-bold">{totalItems} Items</span>
+                  <span className="text-info">
+                    Subtotal: $ {totalPriceCart}
+                  </span>
                   <div className="card-actions">
-                    <button className="btn btn-primary btn-block">
+                    <Link to="/cart" className="btn btn-primary btn-block">
                       View cart
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -160,7 +193,7 @@ function Navbar({ onSearchChange }) {
 
       {openSearch && (
         <div
-          className="container flex justify-center mx-auto fixed z-40 px-10 pt-20 pb-3 bg-sky-600  animate__faster animate__animated
+          className="w-full flex justify-center mx-auto fixed z-40 px-10  py-3 bg-sky-600  animate__faster animate__animated
 animate__slideInDown"
         >
           <Search onSearchChange={onSearchChange} />

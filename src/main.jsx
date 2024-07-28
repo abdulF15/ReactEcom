@@ -7,7 +7,8 @@ import ProductsPage from "./Pages/products.jsx";
 import CategoryProductsPage from "./Pages/categoryProducts.jsx";
 import ErrorPage from "./Pages/error.jsx";
 import DetailProductPage from "./Pages/detailProducts.jsx";
-import CartProvider from "./context/CartContext.jsx";
+import { CartProvider } from "./context/CartContext.jsx";
+import CartPage from "./Pages/cart.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,12 +28,16 @@ const router = createBrowserRouter([
     path: "/category/:slug",
     element: <CategoryProductsPage />,
   },
+  {
+    path: "/cart",
+    element: <CartPage />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {/* <CartProvider> */}
-    <RouterProvider router={router} />
-    {/* </CartProvider> */}
+    <CartProvider>
+      <RouterProvider router={router} />
+    </CartProvider>
   </React.StrictMode>
 );

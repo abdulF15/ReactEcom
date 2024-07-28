@@ -11,11 +11,14 @@ function CategoryProductsPage() {
   const { slug } = useParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState([]);
+
   useEffect(() => {
     getProductsByCategory(slug, (res) => {
       if (res.success === true) {
         if (res.data && res.data.products) {
           setProducts(res.data);
+          setSearch(res.data.products);
         } else {
           console.error("Invalid data structure", res.data);
           setProducts({ products: [] }); // Jika tidak ada data products, set menjadi array kosong
@@ -28,11 +31,19 @@ function CategoryProductsPage() {
     });
   }, [slug]);
 
+  const onSearchChange = (value) => {
+    if (typeof value === "string") {
+      const filterProducts = products.products.filter((item) => {
+        return item.title.toLowerCase().includes(value.toLowerCase());
+      });
+      setSearch(filterProducts);
+    }
+  };
   return (
     <>
       <TopBar />
-      <Navbar />
-      <div className="container mx-auto px-3 lg:px-5 mt-20 lg:mt-28 ">
+      <Navbar onSearchChange={onSearchChange} />
+      <div className="container mx-auto px-3 lg:px-5 mt-8 lg:mt-12 ">
         {loading ? (
           <Skeleton />
         ) : (
@@ -51,14 +62,12 @@ function CategoryProductsPage() {
         )}
       </div>
 
-      <div className="container mx-auto justify-items-center mt-20 px-2 lg:px-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:mt-28 mb-[2000px]">
+      <div className="container mx-auto justify-items-center mt-16 px-2 lg:px-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:mt-24 ">
         {loading
           ? Array.from({ length: 4 }).map((_, index) => (
               <Skeleton key={index} /> // Menampilkan skeleton loading 4
             ))
-          : products &&
-            products.products &&
-            products.products.map((product) => {
+          : search.map((product) => {
               const imageUrl =
                 product.productImages && product.productImages.length > 0
                   ? product.productImages[0].image

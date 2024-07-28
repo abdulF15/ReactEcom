@@ -32,7 +32,7 @@ function DetailProductPage() {
     <>
       <TopBar />
       <Navbar />
-      <div className="container mx-auto px-3 lg:px-5 mt-8 lg:mt-16 ">
+      <div className="container mx-auto px-3 lg:px-5 mt-7 lg:mt-10 ">
         {loading ? (
           <Skeleton />
         ) : (

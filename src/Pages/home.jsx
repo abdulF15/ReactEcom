@@ -36,7 +36,7 @@ function HomePage() {
     <>
       <TopBar />
       <Navbar onSearchChange={onSearchChange} />
-      <div className="container mx-auto justify-items-center px-2 lg:px-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 mt-8 lg:mt-16 mb-[2000px]">
+      <div className="container mx-auto justify-items-center px-2 lg:px-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 md:gap-3 mt-8 lg:mt-16 ">
         {loading
           ? Array.from({ length: 4 }).map((_, index) => (
               <Skeleton key={index} /> // Menampilkan skeleton loading 4
@@ -49,6 +49,7 @@ function HomePage() {
               return (
                 <CardProduct
                   key={index}
+                  id={product.id}
                   title={product.title}
                   image={imageUrl}
                   price={product.price}
