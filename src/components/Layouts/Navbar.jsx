@@ -99,8 +99,12 @@ function Navbar({ onSearchChange }) {
           </div>
           <div className="navbar-end ">
             <div className="hidden lg:flex float-right gap-2">
-              <a className="btn btn-outline btn-info ">Login</a>
-              <a className="btn btn-outline btn-info ">Register</a>
+              <Link to="/login" className="btn btn-outline btn-info ">
+                Login
+              </Link>
+              <Link to="/register" className="btn btn-outline btn-info ">
+                Register
+              </Link>
             </div>
             <div className="lg:hidden float-right">
               <button

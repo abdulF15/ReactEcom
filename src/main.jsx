@@ -9,6 +9,8 @@ import ErrorPage from "./Pages/error.jsx";
 import DetailProductPage from "./Pages/detailProducts.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 import CartPage from "./Pages/cart.jsx";
+import LoginPage from "./Pages/login.jsx";
+import RegisterPage from "./Pages/register.jsx";
 
 const router = createBrowserRouter([
   {
@@ -16,10 +18,10 @@ const router = createBrowserRouter([
     element: <HomePage />,
     // errorElement: <ErrorPage />,
   },
-  {
-    path: "/products",
-    element: <ProductsPage />,
-  },
+  // {
+  //   path: "/products",
+  //   element: <ProductsPage />,
+  // },
   {
     path: "/products/:slug",
     element: <DetailProductPage />,
@@ -31,6 +33,14 @@ const router = createBrowserRouter([
   {
     path: "/cart",
     element: <CartPage />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
+  {
+    path: "/register",
+    element: <RegisterPage />,
   },
 ]);
 
